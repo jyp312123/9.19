@@ -6,17 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+ <style>
+   .box{
+       width:100px;
+       height:100px;
+       background:#dcdcdc;
+   }
+ </style>
 </head>
 <body>
   <button id="btn">aaa</button>
-  <div id="box">bbb</div>
+  <div id="box" class="box">bbb</div>
 
   <script>
     var t = 0; 
     box.addEventListener("touchstart",(e)=>{
-        // console.log("start touch");
-        // t=new Date().getTime()
         box.innerHTML=e.touches.length;
         box.addEventListener("touchmove",()=>{
             console.log("touch move")
@@ -26,11 +30,7 @@
             console.log("touch end")
         })
     })
-    // box.addEventListener("click",()=>{
-    //     console.log("click....")
-    //     console.log(new Date().getTime()-t)
-    //     btn.innerHTML=new Date().getTime()-t
-    // })
+
   </script>
 </body>
 </html>
