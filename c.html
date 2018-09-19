@@ -14,15 +14,23 @@
 
   <script>
     var t = 0; 
-    box.addEventListener("touchstart",()=>{
-        console.log("start touch");
-        t=new Date().getTime()
+    box.addEventListener("touchstart",(e)=>{
+        // console.log("start touch");
+        // t=new Date().getTime()
+        box.innerHTML=e.touches.length;
+        box.addEventListener("touchmove",()=>{
+            console.log("touch move")
+            box.innerHTML=e.touches.length;
+        })
+        box.addEventListener("touchend",()=>{
+            console.log("touch end")
+        })
     })
-    box.addEventListener("click",()=>{
-        console.log("click....")
-        console.log(new Date().getTime()-t)
-        btn.innerHTML=new Date().getTime()-t
-    })
+    // box.addEventListener("click",()=>{
+    //     console.log("click....")
+    //     console.log(new Date().getTime()-t)
+    //     btn.innerHTML=new Date().getTime()-t
+    // })
   </script>
 </body>
 </html>
