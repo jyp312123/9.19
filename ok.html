@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>支付成功</title>
+    <link rel="stylesheet" type="text/css" href="css/sucss.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font_nsd476wazq/iconfont.css"/>
+
+        <!-- head 中 -->
+        <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+        <style>
+           *{
+    margin:0;
+    padding:0;
+}
+
+
+
+.box{
+    width:100%;
+    height:100%;
+    flex-direction: column;
+ overflow: hidden;
+   }
+header{
+   width:100%;
+   height:70px;
+   position: fixed;
+   top:0;
+   background:#373b3e;
+}
+.tit{
+   width:100%;
+   height:25px;
+  
+}
+
+.top{
+   width:100%;
+   height:45px;
+}
+.del{
+   float: left;
+   width:60px;
+   height:35px;
+   border-right: 2px solid #131716;
+   text-align: center;
+   line-height: 35px;
+   font-size: 28px;
+   color:#fff; 
+}
+.stop{
+ float: left;
+ width:210px;
+ height:40px;
+ margin-top:-1px;
+ font-size:22px;
+ color:#fff;
+ padding-left:20px;
+ font-weight: bold;
+ line-height: 40px;
+}
+.so{
+   float: left;
+   width: 79px;
+   height: 40px;
+   margin-top: -7px;
+   text-align: center;
+   margin-left:40px;
+   font-size: 30px;
+}
+.so i{
+    font-size: 30px;
+    color: #fff;
+    margin-top: 9px;
+}
+
+section{
+    width:100%;  
+    margin-top:70px;
+    overflow: hidden;
+}
+.payment{
+    width: 100%;
+    height: 228px;
+    background: #5391fb;
+    overflow: hidden;
+}
+.ment{
+    width: 38%;
+    height: 60px;
+    height: 60px;
+    /* margin: 0 auto; */
+    margin: 23px 10px 10px 132px;
+}
+.ment2{
+width:30%;
+height:40px;
+margin:0 auto;
+
+}
+.ment2 input{
+font-size: 18px;
+    color: #ebe92c;
+    font-size: 31px;
+    border: 0;
+    width: 134px;
+    margin-left: 11px;
+    margin-top: -13px;
+        background: #5391fb;
+}
+.ment3{
+    width: 30%;
+    height: 35px;
+    /* margin: 17px; */
+    text-align: center;
+    line-height: 35px;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 144px;
+    margin-top: 3px;
+}
+.ment h1 img{
+width:25px;
+height:25px;
+}
+li{
+    list-style: none;
+}
+.ment h1{
+    margin-top: 3px;
+ float: left;
+}
+.ment h2{
+float: left;
+color:#fff;
+font-weight: normal;
+font-size: 22px;
+line-height: 37px;
+height:30px;
+padding-top:22/px;
+}
+.prompt{
+    color: #fff;
+    font-size: 8px;
+    width: 100%;
+    padding: 29px 6% 0 15%;
+}
+.box{
+overflow: hidden;
+}
+.list{
+    width: 100%;
+    height: 131px;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.list ul{
+ width: 100%;
+ height: 100%;
+}
+.list li{
+ font-size: 16px;
+ font-weight: normal;
+ height:33%;
+ border-bottom:1px solid #ccc;
+ line-height: 40px;
+}
+.list1{
+ width: 73%;
+ height: 100%;
+ margin: 0 15%;
+}
+.list1  label{
+ display: block;
+ float: left;
+ color:#333333;
+}
+.list1 span{
+ display:block;
+ float: right;
+ color:#333333;
+ 
+}
+.list1 input{
+    height:95%;
+    display:block;
+    float: right;
+    color:#333333;
+    border:none;
+    width: 103px;
+    font-size: 16px;
+   }
+.tu{
+width:100%;
+height:170px;
+/* // background:#ff0000; */
+overflow: hidden;
+
+}
+.tu1{
+width:90%;
+height:85%;
+/* // background:#ff0; */
+margin:3% 5%;
+}
+.tu1 img{
+width:100%;
+height:100%;
+}
+footer{
+  width:100%;
+  height:160px;
+/* //   background:#096;  */
+  position: fixed; 
+  bottom:0;
+}
+footer .bot{
+position: absolute;
+bottom:-5px;
+}
+footer img{
+  width:100%;
+  height:100%;
+}
+
+.list1 #plate{
+    margin-left:30px;
+}
+        </style>
+</head>
+<body>
+
+
+        <!--  -->
+        <section>
+                <div class="payment">
+                    <div class="ment">
+                            <h1><img src="img/ico_success.png"/></h1>
+                            <h2>&nbsp;&nbsp;&nbsp;支付成功 !</h2>
+                    </div>
+                    <div class="ment2">
+                         <input id="fee1">
+                    </div>
+                    <div class="ment3">完成</div>
+                    <div class="prompt">温馨提示  如需要电子发票请进入主页--停车服务--电子发票索取</div>   
+              </div>
+    
+              <!--  -->
+                    <div class="list">
+                            <ul>
+                                <li>
+                                    <div class="list1">
+                                    <label>车牌号码</label>
+                                    <input id="plate" name="plate">
+                                    <!-- <span id="plate" ></span> -->
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="list1">                     
+                                    <label>支付时间</label>
+                                    <input id="stayTime" name="plate">
+                                    <!-- <span  id="stayTime"></span> -->
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="list1">
+                                    <label>优惠金额</label>
+                                    <span id="feeDesc">0元</span>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+    
+                  
+                  <!--  -->
+                  <div class="tu">
+                      <div class="tu1">
+                          <h1><img src="img/banner.png"/></h1>
+                      </div>
+                  </div>
+
+            </section>
+    
+           <footer>
+               <div class="bot"><img src="img/bac.png"/></div>
+           </footer>
+
+        </div>
+
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<script>
+// 
+// $(".ment3").click(function() {
+// 			window.location.href = "suc.html";
+// });
+
+
+var carInfo = JSON.parse(window.localStorage.getItem('carInfo'));//从本地带过来
+                console.log(carInfo)
+            
+          $(function(){
+                $('#plate').val(carInfo.plate);//车牌号码
+                $('#stayTime').val(carInfo.endTime);//停留时长
+                 $('#fee1').val('￥'+' '+carInfo.fee * 0.01 + '元'); //应收金额
+                                                    
+            })
+
+
+
+</script>
+
+
+</body>
+</html>
