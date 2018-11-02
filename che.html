@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+    <title>行车记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <!-- <link rel="stylesheet" href="css/list.css"> -->
+    <!-- head 中 -->
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <style>
+        .weui_btn_primary {
+            background-color: #00a858;
+        }
+   .weui-cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 19% !important;
+    margin-left: -13px !important;
+
+   }  
+           .weui-cell__bd{
+            width:80% !important;
+            height:100%; 
+          /* background:#ff0; */
+            margin-left:4%;
+        }
+
+
+
+
+
+                        .weui-cell__bd h1{
+             height:6%;
+             width:95%;
+             font-size: 18px;
+             font-weight: normal;
+             margin:0 auto;
+             color:#1254e9;
+             border-bottom: 1px solid #efefef;
+        }
+                .weui-cell__bd h1 a{
+            color:#333;
+            float: right;
+        }
+                .weui-cell__bd p{
+            padding-left:15%;
+            line-height:30px;
+        }
+    </style>
+</head>
+
+<body ontouchstart>
+    <div class="weui_cells" id="list">
+    </div>
+    <div class="weui-infinite-scroll" id="scroll">
+        <div class="infinite-preloader"></div>
+        正在加载...
+    </div>
+
+<!-- var str = "
+<div class='weui-cell'>
+    <div class='weui-cell__bd'>
+        <h1>" + map["plate"] + "
+            <a>" + map["dateStr"] + "</a>
+        </h1>
+        <p>停车场名称　：" + map["parking"] + "</p>
+        <p>入场时间：" + map["inTime"] + "</p>
+        <p>出场时间：" + map["outTime"] + "</p>
+    </div>
+</div>"; -->
+
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+</body>
+<script type="text/javascript">
+
+
+    var queryInfo = JSON.parse(window.localStorage.getItem('carInfo'));//从本地带过来
+    var startTime = queryInfo.startTime;
+    var endTime = queryInfo.endTime;
+    var openid = queryInfo.openid;
+    var start = 0;
+    var end = 5;
+
+    var jsonData = {
+        "openid": openid,
+        "inTime": startTime,
+        "outTime": endTime,
+        "start": start,
+        "end": end
+    };
+    getData(jsonData);
+
+    var records = [];
+    var havaData = false;
+    var count = -1;
+    // 去后台查询通行记录
+    function getData(jsonData) {
+        $.get("http://open.cheyifu2016.com:8890/inoutparking/query", jsonData, function (data) {
+            console.log(data);
+            if (data.result == 0) {
+                records = data.list;
+                count = data.count;
+                if (records.length == 0 && !havaData) {
+                    $("#scroll").hide();
+                    $.alert("该段时间内没有行车记录！", function () {
+                        WeixinJSBridge.call('closeWindow');
+                    });
+                } else {
+                    havaData = true;
+                }
+                // 对查询到的时间进行 格式化处理（去掉毫秒值）
+                for (var i in records) {
+                    var inTime = records[i]['inTime']
+                    if (inTime && inTime != null) {
+                        inTime = inTime.substring(0, inTime.indexOf('.'));
+                        records[i]['inTime'] = inTime;
+                    } else {
+                        records[i]['inTime'] = '未知';
+                    }
+                    var outTime = records[i]['outTime']
+                    if (outTime && outTime != null) {
+                        outTime = outTime.substring(0, outTime.indexOf('.'));
+                        records[i]['outTime'] = outTime;
+                    } else {
+                        records[i]['outTime'] = '未知';
+                    }
+                }
+                showData(records);
+            } else {
+                $(document.body).destroyInfinite();
+                $("#scroll").hide();
+                $.alert(data.strError, function () {
+                    WeixinJSBridge.call('closeWindow');
+                });
+            }
+        }, "json");
+    }
+
+    function showData(records) {
+        // 页面默认显示 前5条数据
+        var length = records.length;
+        for (var i = 0; i < length; i++) {
+            var map = records[i];
+            var div = document.getElementById("list");
+            var str = "<div class='weui-cell'><div class='weui-cell__bd'><h1>" + map["plate"] + "<a>" + map["dateStr"] + "</a></h1><p>停车场名 " + map["parking"] + "</p><p>入场时间 " + map["inTime"] + "</p><p>出场时间 " + map["outTime"] + "</p></div></div>";
+            //div.innerHTML=str;
+            div.innerHTML = div.innerHTML + str;
+        }
+        if (length < 5) {
+            $("#scroll").hide();
+        }
+    }
+
+    // 滚动条滑动到离底部100，多显示一条数据。 显示后不会消失。
+
+    $(document.body).infinite(100);
+    var loading = false;  //状态标记 否则一直循环刷新
+    $(document.body).infinite().on("infinite", function () {
+        if (loading) return;
+        loading = true;
+        setTimeout(function () {
+            var length = records.length;
+            console.log(length + "  == " + havaData);
+            if (length > 0 && havaData) {
+                //salert(length);
+                //havaData = true;
+                start = start + 5;
+                //end = end + 5;
+                var jsonData = {
+                    "openid": openid,
+                    "inTime": startTime,
+                    "outTime": endTime,
+                    "start": start,
+                    "end": end,
+                    "count": count
+                };
+                getData(jsonData);
+            } else {
+                console.log("全部数据已经加载完成！");
+                havaData = false;
+                $.alert("全部数据已经加载完成！");
+                $(document.body).destroyInfinite();
+                $("#scroll").hide();
+                //start = 0;
+                //end = 0;
+                return;
+            }
+            loading = false;
+        }, 50);   //模拟延迟
+    });
+
+</script>
+
+</html>
